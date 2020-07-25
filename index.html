@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="page-content page-container" id="page-content">
+		<div class="padding">
+			<div class="row container d-flex justify-content-center">
+				<div class="col-lg-12">
+					<div class="card px-3">
+						<div class="card-body">
+							<h4 class="card-title">Todo list</h4>
+							<div class="add-items d-flex"> 
+								<input type="text" name="todoInput" v-model="todoValue" class="form-control todo-list-input" placeholder="What do you need to do today?" v-on:keyup.enter="addTodo(todoValue)"> 
+								<button class="add btn btn-primary font-weight-bold todo-list-add-btn" v-on:click="addTodo(todoValue)">Add</button> 
+							</div>
+							<div class="list-wrapper" id="todos">
+								<ul class="d-flex flex-column-reverse todo-list" v-for="todo in sortTodo" v-bind:key="todo.id">
+									<li>
+										<div class="todo-item">
+										  <input type="checkbox" name="completed" v-model="todo.completed">
+										  <label for="completed" class="todoItem" v-if="todo.completed">
+											{{ todo.name }}
+										  </label>
+										  <label for="completed" v-else="">
+											{{ todo.name }}
+										  </label>
+										</div>
+										<i class="remove mdi mdi-close-circle-outline" v-on:click="() => removeTodo(todo.id)"></i>
+									</li>
+								</ul>
+							</div>
+							<div>
+								<div class="actions">
+								  <a class="btn btn-primary font-weight-bold" v-on:click="completeAll">Complete All</a>
+
+								  <div class="removeActions">
+									<a class="btn btn-warning font-weight-bold" v-on:click="removeComplete">Remove Completed Tasks</a>
+									<a class="btn btn-warning font-weight-bold" v-on:click="removeAll">Remove All</a>
+								  </div>
+								</div>
+								<hr>
+
+								<div class="footer">
+								  <div class="getIncomplete">
+									<span>{{ getIncomplete }} items left</span>
+								  </div>
+								  <div class="footer-item" @click="sort = 'all'">
+									<span>All</span>
+								  </div>
+								  <div class="footer-item" @click="sort = 'isInProgress'">
+									<span>In Progress</span>
+								  </div>
+								  <div class="footer-item" @click="sort = 'completed'">
+									<span>Completed Task</span>
+								  </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
